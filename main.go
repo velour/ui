@@ -46,7 +46,7 @@ func main() {
 	tex.SetBlendMode(sdl2.Blend)
 
 	rend.SetDrawColor(color.Black)
-	rend.FillRect(nil)
+	rend.Clear()
 	rend.Copy(tex, nil, nil)
 	rend.Present()
 

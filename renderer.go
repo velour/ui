@@ -57,6 +57,14 @@ func (rend *Renderer) Present() {
 	C.SDL_RenderPresent(rend.sdl())
 }
 
+// Clear clears the current rendering target with the drawing color.
+func (rend *Renderer) Clear() error {
+	if C.SDL_RenderClear(rend.sdl()) < 0 {
+		return sdlError()
+	}
+	return nil
+}
+
 // SetDrawColor sets the color used for drawing operations (Rect, Line and Clear).
 func (rend *Renderer) SetDrawColor(col color.Color) error {
 	r, g, b, a := col.RGBA()
