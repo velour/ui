@@ -215,12 +215,12 @@ func (canv Canvas) SetDrawColor(col color.Color) {
 	must(canv.win.rend.SetDrawColor(col))
 }
 
-// DrawPng draws the image loaded from a PNG file to the canvas.
+// DrawPNG draws the image loaded from a PNG file to the canvas.
 // The image is drawn with the upper-left corner located at x, y.
 func (canv Canvas) DrawPng(path string, x, y int) {
 	i, ok := canv.win.imgs[path]
 	if !ok {
-		png := loadPng(path)
+		png := loadPNG(path)
 		tex, err := sdl2.CreateTextureFromImage(canv.win.rend, png)
 		if err != nil {
 			panic(err)
@@ -239,7 +239,7 @@ func (canv Canvas) DrawPng(path string, x, y int) {
 	must(canv.win.rend.Copy(i.tex, nil, &dst))
 }
 
-func loadPng(path string) *image.NRGBA {
+func loadPNG(path string) *image.NRGBA {
 	r, err := os.Open(path)
 	if err != nil {
 		panic(err)
