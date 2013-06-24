@@ -23,8 +23,8 @@ var (
 )
 
 // Hijack must be called by the main go routine to hijack it for the user interface;
-// it never returns. The function f is called in a new go routine as the new "main" function,
-// and rate is the rate at which the user interface should poll for events.
+// it never returns. The function f is called in a new go routine as the new "main" function.
+// Rate is the rate at which the user interface should poll for events.
 func Hijack(f func(), rate time.Duration) {
 	if err := sdl2.Init(sdl2.Everything); err != nil {
 		panic(err)
