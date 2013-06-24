@@ -146,10 +146,8 @@ func (win *Window) Events() <-chan interface{} {
 	return win.events
 }
 
-// Draw calls a function running on the main go routine, and passes it a canvas
-// which can draw to the window. The function can use the Canvas's operations
-// as long as  it does not use them in a different go routine than the one in which
-// the function was called by Draw.
+// Draw calls f from the main go routine. F is passed a canvas which can draw to the
+// window. The Canvas's methods can only safely be called from the main go routine.
 func (win *Window) Draw(f func(win Canvas)) {
 	do(func() { f(Canvas{win}) })
 }
