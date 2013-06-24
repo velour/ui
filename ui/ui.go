@@ -19,6 +19,7 @@ func init() {
 var (
 	doChan  = make(chan func(), 1)
 	windows = make(map[sdl2.WindowID]*Window, 1)
+	missedEvents []windowIDer
 )
 
 // Hijack must be called by the main go routine to hijack it for the user interface;
@@ -51,18 +52,34 @@ func do(f func()) {
 	<-done
 }
 
+type windowIDer interface {
+	WindowID() sdl2.WindowID
+}
+
 func pollEvents() {
 	for {
+		missed := missedEvents
+		missedEvents = nil
+		for _, m := range missed {
+			sendEvent(m)
+		}
+
 		ev := sdl2.PollEvent()
 		if ev == nil {
 			break
 		}
-		if e, ok := ev.(interface {
-			WindowID() sdl2.WindowID
-		}); ok {
-			win := windows[e.WindowID()]
-			win.events <- ev
+		if e, ok := ev.(windowIDer); ok {
+			sendEvent(e)
 		}
+	}
+}
+
+func sendEvent(e windowIDer) {
+	if win, ok := windows[e.WindowID()]; ok {
+		win.events <- e
+	} else {
+		// Must be that the window is still being created.  Let's try again later.
+		missedEvents = append(missedEvents, e)
 	}
 }
 
