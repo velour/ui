@@ -17,8 +17,8 @@ func init() {
 }
 
 var (
-	doChan  = make(chan func(), 1)
-	windows = make(map[sdl2.WindowID]*Window, 1)
+	doChan       = make(chan func(), 1)
+	windows      = make(map[sdl2.WindowID]*Window, 1)
 	missedEvents []windowIDer
 )
 

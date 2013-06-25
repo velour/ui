@@ -23,7 +23,7 @@ func main() {
 
 func main2() {
 	win := ui.NewWindow("test", width, height)
-	tick := time.NewTicker(20*time.Millisecond)
+	tick := time.NewTicker(20 * time.Millisecond)
 	for {
 		select {
 		case ev := <-win.Events():
