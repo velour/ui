@@ -18,7 +18,7 @@ const (
 )
 
 func main() {
-	ui.Hijack(main2, 20*time.Millisecond)
+	ui.Start(main2, 20*time.Millisecond)
 }
 
 func main2() {
