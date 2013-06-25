@@ -177,7 +177,7 @@ func (rend *Renderer) FillRects(rects []image.Rectangle) error {
 	return nil
 }
 
-// DratRect draws a rectangle on the current rendering target.
+// DrawRect draws a rectangle on the current rendering target.
 func (rend *Renderer) DrawRect(rect *image.Rectangle) error {
 	if C.SDL_RenderDrawRect(rend.sdl(), sdlRect(rect)) < 0 {
 		return sdlError()

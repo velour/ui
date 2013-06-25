@@ -34,7 +34,7 @@ func main2() {
 			win.Draw(func(w ui.Canvas) {
 				w.SetDrawColor(color.Black)
 				w.Clear()
-				w.DrawPng(imgPath, 0, 0)
+				w.DrawPNG(imgPath, 0, 0)
 				w.Present()
 			})
 		}

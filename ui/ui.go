@@ -178,12 +178,12 @@ func (canv Canvas) DrawPoint(x, y int) {
 	must(canv.win.rend.DrawPoint(x, y))
 }
 
-// DrawPoint draws multiple points on the canvas.
+// DrawPoints draws multiple points on the canvas.
 func (canv Canvas) DrawPoints(points []image.Point) {
 	must(canv.win.rend.DrawPoints(points))
 }
 
-// DratRect draws a rectangle on the canvas.
+// DrawRect draws a rectangle on the canvas.
 func (canv Canvas) DrawRect(rect *image.Rectangle) {
 	must(canv.win.rend.DrawRect(rect))
 }
@@ -215,7 +215,7 @@ func (canv Canvas) SetDrawColor(col color.Color) {
 
 // DrawPNG draws the image loaded from a PNG file to the canvas.
 // The image is drawn with the upper-left corner located at x, y.
-func (canv Canvas) DrawPng(path string, x, y int) {
+func (canv Canvas) DrawPNG(path string, x, y int) {
 	i, ok := canv.win.imgs[path]
 	if !ok {
 		png := loadPNG(path)
