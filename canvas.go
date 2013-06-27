@@ -44,29 +44,15 @@ func (c Canvas) SetDrawColor(col color.Color) {
 	}
 }
 
-// DrawPoint draws a point on the canvas.
-func (c Canvas) DrawPoint(x, y int) {
-	if C.SDL_RenderDrawPoint(c.win.rend, C.int(x), C.int(y)) < 0 {
-		panic(sdlError())
-	}
-}
-
 // DrawPoints draws multiple points on the canvas.
-func (c Canvas) DrawPoints(points []image.Point) {
+func (c Canvas) DrawPoints(points ...image.Point) {
 	if C.SDL_RenderDrawPoints(c.win.rend, sdlPoints(points), C.int(len(points))) < 0 {
 		panic(sdlError())
 	}
 }
 
-// DrawLine draws a line on the canvas.
-func (c Canvas) DrawLine(x1, y1, x2, y2 int) {
-	if C.SDL_RenderDrawLine(c.win.rend, C.int(x1), C.int(y1), C.int(x2), C.int(y2)) < 0 {
-		panic(sdlError())
-	}
-}
-
 // DrawLines draws a series of connected lines on the canvas.
-func (c Canvas) DrawLines(points []image.Point) {
+func (c Canvas) DrawLines(points ...image.Point) {
 	if C.SDL_RenderDrawLines(c.win.rend, sdlPoints(points), C.int(len(points))) < 0 {
 		panic(sdlError())
 	}
@@ -81,29 +67,15 @@ func sdlPoints(points []image.Point) *C.SDL_Point {
 	return &pts[0]
 }
 
-// DrawRect draws a rectangle on the canvas.
-func (c Canvas) DrawRect(rect *image.Rectangle) {
-	if C.SDL_RenderDrawRect(c.win.rend, sdlRect(rect)) < 0 {
-		panic(sdlError())
-	}
-}
-
 // DrawRects draws some number of rectangles on the canvas.
-func (c Canvas) DrawRects(rects []image.Rectangle) {
+func (c Canvas) DrawRects(rects ...image.Rectangle) {
 	if C.SDL_RenderDrawRects(c.win.rend, sdlRects(rects), C.int(len(rects))) < 0 {
 		panic(sdlError())
 	}
 }
 
-// FillRect fills a rectangle on the canvas with the drawing color.
-func (c Canvas) FillRect(rect *image.Rectangle) {
-	if C.SDL_RenderFillRect(c.win.rend, sdlRect(rect)) < 0 {
-		panic(sdlError())
-	}
-}
-
 // FillRects fills some number of rectangles on the canvas with the drawing color.
-func (c Canvas) FillRects(rects []image.Rectangle) {
+func (c Canvas) FillRects(rects ...image.Rectangle) {
 	if C.SDL_RenderFillRects(c.win.rend, sdlRects(rects), C.int(len(rects))) < 0 {
 		panic(sdlError())
 	}
