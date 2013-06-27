@@ -25,49 +25,49 @@ type Canvas struct {
 }
 
 // Clear clears the canvas with the drawing color.
-func (canv Canvas) Clear() {
-	if C.SDL_RenderClear(canv.win.rend) < 0 {
+func (c Canvas) Clear() {
+	if C.SDL_RenderClear(c.win.rend) < 0 {
 		panic(sdlError())
 	}
 }
 
 // SetDrawColor sets the color used for drawing operations (Rect, Line and Clear).
-func (canv Canvas) SetDrawColor(col color.Color) {
+func (c Canvas) SetDrawColor(col color.Color) {
 	r, g, b, a := col.RGBA()
 	f := 255.0 / 0xFFFF
 	r8 := C.Uint8(float64(r) * f)
 	g8 := C.Uint8(float64(g) * f)
 	b8 := C.Uint8(float64(b) * f)
 	a8 := C.Uint8(float64(a) * f)
-	if C.SDL_SetRenderDrawColor(canv.win.rend, r8, g8, b8, a8) < 0 {
+	if C.SDL_SetRenderDrawColor(c.win.rend, r8, g8, b8, a8) < 0 {
 		panic(sdlError())
 	}
 }
 
 // DrawPoint draws a point on the canvas.
-func (canv Canvas) DrawPoint(x, y int) {
-	if C.SDL_RenderDrawPoint(canv.win.rend, C.int(x), C.int(y)) < 0 {
+func (c Canvas) DrawPoint(x, y int) {
+	if C.SDL_RenderDrawPoint(c.win.rend, C.int(x), C.int(y)) < 0 {
 		panic(sdlError())
 	}
 }
 
 // DrawPoints draws multiple points on the canvas.
-func (canv Canvas) DrawPoints(points []image.Point) {
-	if C.SDL_RenderDrawPoints(canv.win.rend, sdlPoints(points), C.int(len(points))) < 0 {
+func (c Canvas) DrawPoints(points []image.Point) {
+	if C.SDL_RenderDrawPoints(c.win.rend, sdlPoints(points), C.int(len(points))) < 0 {
 		panic(sdlError())
 	}
 }
 
 // DrawLine draws a line on the canvas.
-func (canv Canvas) DrawLine(x1, y1, x2, y2 int) {
-	if C.SDL_RenderDrawLine(canv.win.rend, C.int(x1), C.int(y1), C.int(x2), C.int(y2)) < 0 {
+func (c Canvas) DrawLine(x1, y1, x2, y2 int) {
+	if C.SDL_RenderDrawLine(c.win.rend, C.int(x1), C.int(y1), C.int(x2), C.int(y2)) < 0 {
 		panic(sdlError())
 	}
 }
 
 // DrawLines draws a series of connected lines on the canvas.
-func (canv Canvas) DrawLines(points []image.Point) {
-	if C.SDL_RenderDrawLines(canv.win.rend, sdlPoints(points), C.int(len(points))) < 0 {
+func (c Canvas) DrawLines(points []image.Point) {
+	if C.SDL_RenderDrawLines(c.win.rend, sdlPoints(points), C.int(len(points))) < 0 {
 		panic(sdlError())
 	}
 }
@@ -82,29 +82,29 @@ func sdlPoints(points []image.Point) *C.SDL_Point {
 }
 
 // DrawRect draws a rectangle on the canvas.
-func (canv Canvas) DrawRect(rect *image.Rectangle) {
-	if C.SDL_RenderDrawRect(canv.win.rend, sdlRect(rect)) < 0 {
+func (c Canvas) DrawRect(rect *image.Rectangle) {
+	if C.SDL_RenderDrawRect(c.win.rend, sdlRect(rect)) < 0 {
 		panic(sdlError())
 	}
 }
 
 // DrawRects draws some number of rectangles on the canvas.
-func (canv Canvas) DrawRects(rects []image.Rectangle) {
-	if C.SDL_RenderDrawRects(canv.win.rend, sdlRects(rects), C.int(len(rects))) < 0 {
+func (c Canvas) DrawRects(rects []image.Rectangle) {
+	if C.SDL_RenderDrawRects(c.win.rend, sdlRects(rects), C.int(len(rects))) < 0 {
 		panic(sdlError())
 	}
 }
 
 // FillRect fills a rectangle on the canvas with the drawing color.
-func (canv Canvas) FillRect(rect *image.Rectangle) {
-	if C.SDL_RenderFillRect(canv.win.rend, sdlRect(rect)) < 0 {
+func (c Canvas) FillRect(rect *image.Rectangle) {
+	if C.SDL_RenderFillRect(c.win.rend, sdlRect(rect)) < 0 {
 		panic(sdlError())
 	}
 }
 
 // FillRects fills some number of rectangles on the canvas with the drawing color.
-func (canv Canvas) FillRects(rects []image.Rectangle) {
-	if C.SDL_RenderFillRects(canv.win.rend, sdlRects(rects), C.int(len(rects))) < 0 {
+func (c Canvas) FillRects(rects []image.Rectangle) {
+	if C.SDL_RenderFillRects(c.win.rend, sdlRects(rects), C.int(len(rects))) < 0 {
 		panic(sdlError())
 	}
 }
@@ -131,19 +131,19 @@ func sdlRect(rect *image.Rectangle) *C.SDL_Rect {
 
 // DrawPNG draws the image loaded from a PNG file to the canvas.
 // The image is drawn with the upper-left corner located at x, y.
-func (canv Canvas) DrawPNG(path string, x, y int) {
-	tex, ok := canv.win.imgs[path]
+func (c Canvas) DrawPNG(path string, x, y int) {
+	tex, ok := c.win.imgs[path]
 	if !ok {
 		img := loadPNG(path)
 		tex = texture{
-			tex:    texFromImage(canv.win.rend, img),
+			tex:    texFromImage(c.win.rend, img),
 			width:  img.Bounds().Dx(),
 			height: img.Bounds().Dy(),
 		}
-		canv.win.imgs[path] = tex
+		c.win.imgs[path] = tex
 	}
 	dst := image.Rect(x, y, x+tex.width, y+tex.height)
-	if C.SDL_RenderCopy(canv.win.rend, tex.tex, nil, sdlRect(&dst)) < 0 {
+	if C.SDL_RenderCopy(c.win.rend, tex.tex, nil, sdlRect(&dst)) < 0 {
 		panic(sdlError())
 	}
 }
