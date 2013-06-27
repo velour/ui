@@ -136,16 +136,9 @@ func newWindowEvent(ev *C.SDL_Event) *WindowEvent {
 	}
 }
 
-type KeyState C.Uint8
-
-const (
-	KeyPressed  KeyState = C.SDL_PRESSED
-	KeyReleased KeyState = C.SDL_RELEASED
-)
-
 type KeyboardEvent struct {
 	winID  windowID
-	State  KeyState
+	Down   bool
 	Repeat bool
 	Key    Key
 }
@@ -156,11 +149,10 @@ func (e KeyboardEvent) windowID() windowID {
 
 func newKeyboardEvent(ev *C.SDL_Event) *KeyboardEvent {
 	e := (*C.SDL_KeyboardEvent)(unsafe.Pointer(ev))
-	r := e.repeat != 0
 	return &KeyboardEvent{
 		winID:  windowID(e.windowID),
-		State:  KeyState(e.state),
-		Repeat: r,
+		Down:   e.state == C.SDL_PRESSED,
+		Repeat: e.repeat != 0,
 		Key:    Key(e.keysym.sym),
 	}
 }
@@ -198,7 +190,7 @@ const (
 type MouseButtonEvent struct {
 	winID  windowID
 	Button MouseButton
-	State  KeyState
+	Down   bool
 	X, Y   int
 }
 
@@ -211,7 +203,7 @@ func newMouseButtonEvent(ev *C.SDL_Event) *MouseButtonEvent {
 	return &MouseButtonEvent{
 		winID:  windowID(e.windowID),
 		Button: MouseButton(e.button),
-		State:  KeyState(e.state),
+		Down:   e.state == C.SDL_PRESSED,
 		X:      int(e.x),
 		Y:      int(e.y),
 	}
