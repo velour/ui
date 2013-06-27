@@ -24,9 +24,8 @@ func init() {
 }
 
 var (
-	doChan       = make(chan func(), 1)
-	windows      = make(map[windowID]*Window, 1)
-	missedEvents []windowIDer
+	doChan  = make(chan func(), 1)
+	windows = make(map[windowID]*Window, 1)
 )
 
 // Start starts the user interface.  It must be called by the main go routine, and it
@@ -70,26 +69,13 @@ type windowIDer interface {
 
 func pollEvents() {
 	for {
-		missed := missedEvents
-		missedEvents = nil
-		for _, m := range missed {
-			sendEvent(m)
-		}
-
 		if ev := pollEvent(); ev == nil {
 			break
 		} else if e, ok := ev.(windowIDer); ok {
-			sendEvent(e)
+			if win, ok := windows[e.windowID()]; ok {
+				win.events <- e
+			}
 		}
-	}
-}
-
-func sendEvent(e windowIDer) {
-	if win, ok := windows[e.windowID()]; ok {
-		win.events <- e
-	} else {
-		// Must be that the window is still being created.  Let's try again later.
-		missedEvents = append(missedEvents, e)
 	}
 }
 
@@ -143,6 +129,7 @@ func (win *Window) Destroy() {
 	do(func() {
 		C.SDL_DestroyRenderer(win.rend)
 		C.SDL_DestroyWindow(win.win)
+		delete(windows, win.id)
 	})
 }
 
