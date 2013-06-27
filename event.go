@@ -1,4 +1,4 @@
-package sdl2
+package ui
 
 /*
 #include <SDL.h>
@@ -22,7 +22,7 @@ import (
 // PollEvent polls for currently pending events.
 //
 // Events not supported by this binding set are discarded.
-func PollEvent() interface{} {
+func pollEvent() interface{} {
 	for {
 		var ev C.SDL_Event
 		if C.SDL_PollEvent(&ev) == 0 {
@@ -117,22 +117,22 @@ func (w WindowEventKind) String() string {
 
 // A WindowEvent is a structure that contains window state change event data.
 type WindowEvent struct {
-	windowID     WindowID
+	winID        windowID
 	Event        WindowEventKind
 	Data1, Data2 int
 }
 
-func (e WindowEvent) WindowID() WindowID {
-	return e.windowID
+func (e WindowEvent) windowID() windowID {
+	return e.winID
 }
 
 func newWindowEvent(ev *C.SDL_Event) *WindowEvent {
 	e := (*C.SDL_WindowEvent)(unsafe.Pointer(ev))
 	return &WindowEvent{
-		windowID: WindowID(e.windowID),
-		Event:    WindowEventKind(e.event),
-		Data1:    int(e.data1),
-		Data2:    int(e.data2),
+		winID: windowID(e.windowID),
+		Event: WindowEventKind(e.event),
+		Data1: int(e.data1),
+		Data2: int(e.data2),
 	}
 }
 
@@ -144,45 +144,45 @@ const (
 )
 
 type KeyboardEvent struct {
-	windowID WindowID
-	State    KeyState
-	Repeat   bool
-	Key      Key
+	winID  windowID
+	State  KeyState
+	Repeat bool
+	Key    Key
 }
 
-func (e KeyboardEvent) WindowID() WindowID {
-	return e.windowID
+func (e KeyboardEvent) windowID() windowID {
+	return e.winID
 }
 
 func newKeyboardEvent(ev *C.SDL_Event) *KeyboardEvent {
 	e := (*C.SDL_KeyboardEvent)(unsafe.Pointer(ev))
 	r := e.repeat != 0
 	return &KeyboardEvent{
-		windowID: WindowID(e.windowID),
-		State:    KeyState(e.state),
-		Repeat:   r,
-		Key:      Key(e.keysym.sym),
+		winID:  windowID(e.windowID),
+		State:  KeyState(e.state),
+		Repeat: r,
+		Key:    Key(e.keysym.sym),
 	}
 }
 
 type MouseMotionEvent struct {
-	windowID         WindowID
+	winID            windowID
 	X, Y, Xrel, Yrel int
 }
 
 func newMouseMotionEvent(ev *C.SDL_Event) *MouseMotionEvent {
 	e := (*C.SDL_MouseMotionEvent)(unsafe.Pointer(ev))
 	return &MouseMotionEvent{
-		windowID: WindowID(e.windowID),
-		X:        int(e.x),
-		Y:        int(e.y),
-		Xrel:     int(e.xrel),
-		Yrel:     int(e.yrel),
+		winID: windowID(e.windowID),
+		X:     int(e.x),
+		Y:     int(e.y),
+		Xrel:  int(e.xrel),
+		Yrel:  int(e.yrel),
 	}
 }
 
-func (e MouseMotionEvent) WindowID() WindowID {
-	return e.windowID
+func (e MouseMotionEvent) windowID() windowID {
+	return e.winID
 }
 
 type MouseButton C.Uint8
@@ -196,41 +196,41 @@ const (
 )
 
 type MouseButtonEvent struct {
-	windowID WindowID
-	Button   MouseButton
-	State    KeyState
-	X, Y     int
+	winID  windowID
+	Button MouseButton
+	State  KeyState
+	X, Y   int
 }
 
-func (e MouseButtonEvent) WindowID() WindowID {
-	return e.windowID
+func (e MouseButtonEvent) windowID() windowID {
+	return e.winID
 }
 
 func newMouseButtonEvent(ev *C.SDL_Event) *MouseButtonEvent {
 	e := (*C.SDL_MouseButtonEvent)(unsafe.Pointer(ev))
 	return &MouseButtonEvent{
-		windowID: WindowID(e.windowID),
-		Button:   MouseButton(e.button),
-		State:    KeyState(e.state),
-		X:        int(e.x),
-		Y:        int(e.y),
+		winID:  windowID(e.windowID),
+		Button: MouseButton(e.button),
+		State:  KeyState(e.state),
+		X:      int(e.x),
+		Y:      int(e.y),
 	}
 }
 
 type MouseWheelEvent struct {
-	windowID WindowID
-	X, Y     int
+	winID windowID
+	X, Y  int
 }
 
 func newMouseWheelEvent(ev *C.SDL_Event) *MouseWheelEvent {
 	e := (*C.SDL_MouseWheelEvent)(unsafe.Pointer(ev))
 	return &MouseWheelEvent{
-		windowID: WindowID(e.windowID),
-		X:        int(e.x),
-		Y:        int(e.y),
+		winID: windowID(e.windowID),
+		X:     int(e.x),
+		Y:     int(e.y),
 	}
 }
 
-func (e MouseWheelEvent) WindowID() WindowID {
-	return e.windowID
+func (e MouseWheelEvent) windowID() windowID {
+	return e.winID
 }

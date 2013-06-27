@@ -7,8 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/eaburns/sdl2"
-	"github.com/eaburns/sdl2/ui"
+	"github.com/eaburns/ui"
 )
 
 const (
@@ -27,7 +26,7 @@ func main2() {
 	for {
 		select {
 		case ev := <-win.Events():
-			if w, ok := ev.(*sdl2.WindowEvent); ok && w.Event == sdl2.WindowClose {
+			if w, ok := ev.(*ui.WindowEvent); ok && w.Event == ui.WindowClose {
 				os.Exit(0)
 			}
 		case <-tick.C:
@@ -35,7 +34,6 @@ func main2() {
 				w.SetDrawColor(color.Black)
 				w.Clear()
 				w.DrawPNG(imgPath, 0, 0)
-				w.Present()
 			})
 		}
 	}
