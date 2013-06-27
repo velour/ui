@@ -3,8 +3,8 @@ event.go:139:6: exported type KeyboardEvent should have comment
 event.go:160:6: exported type MouseMotionEvent should have comment
 event.go:180:6: exported type Button should have comment
 event.go:183:2: exported const ButtonLeft should have comment
-event.go:190:6: exported type MouseButtonEvent should have comment
-event.go:212:6: exported type MouseWheelEvent should have comment
+event.go:206:6: exported type MouseButtonEvent should have comment
+event.go:228:6: exported type MouseWheelEvent should have comment
 key.go:17:6: exported type Key should have comment
 key.go:20:2: comment on exported const Key0 should be of the form "Key0 ..."
 key.go:23:2: comment on exported const Key1 should be of the form "Key1 ..."

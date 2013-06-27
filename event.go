@@ -187,6 +187,22 @@ const (
 	ButtonX2     Button = C.SDL_BUTTON_X2
 )
 
+var buttonNames = map[Button]string{
+	ButtonLeft:   "ButtonLeft",
+	ButtonMiddle: "ButtonMiddle",
+	ButtonRight:  "ButtonRight",
+	ButtonX1:     "ButtonX1",
+	ButtonX2:     "ButtonX2",
+}
+
+func (b Button) String() string {
+	if n, ok := buttonNames[b]; ok {
+		return n
+	}
+	return "Unknown(" + strconv.Itoa(int(b)) + ")"
+
+}
+
 type MouseButtonEvent struct {
 	winID  windowID
 	Button Button
