@@ -29,10 +29,10 @@ func main2() {
 				return
 			}
 		case <-tick.C:
-			win.Draw(func(w ui.Canvas) {
-				w.SetDrawColor(color.Black)
-				w.Clear()
-				w.DrawPNG(imgPath, 0, 0)
+			win.Draw(func(c ui.Canvas) {
+				c.SetColor(color.Black)
+				c.Clear()
+				c.DrawPNG(imgPath, 0, 0)
 			})
 		}
 	}

@@ -31,8 +31,8 @@ func (c Canvas) Clear() {
 	}
 }
 
-// SetDrawColor sets the color used for drawing operations (Rect, Line and Clear).
-func (c Canvas) SetDrawColor(col color.Color) {
+// SetColor sets the color used for drawing operations (DrawPoints, DrawLines, DrawRects, FillRects, and Clear).
+func (c Canvas) SetColor(col color.Color) {
 	r, g, b, a := col.RGBA()
 	f := 255.0 / 0xFFFF
 	r8 := C.Uint8(float64(r) * f)
