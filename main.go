@@ -4,7 +4,6 @@ package main
 
 import (
 	"image/color"
-	"os"
 	"time"
 
 	"github.com/eaburns/ui"
@@ -27,7 +26,7 @@ func main2() {
 		select {
 		case ev := <-win.Events():
 			if w, ok := ev.(*ui.WindowEvent); ok && w.Event == ui.WindowClose {
-				os.Exit(0)
+				return
 			}
 		case <-tick.C:
 			win.Draw(func(w ui.Canvas) {

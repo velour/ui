@@ -13,6 +13,7 @@ import "C"
 
 import (
 	"errors"
+	"os"
 	"runtime"
 	"time"
 	"unsafe"
@@ -36,7 +37,10 @@ func Start(f func(), rate time.Duration) {
 		panic(sdlError())
 	}
 
-	go f()
+	go func() {
+		f()
+		os.Exit(0)
+	}()
 
 	tick := time.NewTicker(rate)
 	for {
