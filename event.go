@@ -177,19 +177,19 @@ func (e MouseMotionEvent) windowID() windowID {
 	return e.winID
 }
 
-type MouseButton C.Uint8
+type Button C.Uint8
 
 const (
-	ButtonLeft   MouseButton = C.SDL_BUTTON_LEFT
-	ButtonMiddle MouseButton = C.SDL_BUTTON_MIDDLE
-	ButtonRight  MouseButton = C.SDL_BUTTON_RIGHT
-	ButtonX1     MouseButton = C.SDL_BUTTON_X1
-	ButtonX2     MouseButton = C.SDL_BUTTON_X2
+	ButtonLeft   Button = C.SDL_BUTTON_LEFT
+	ButtonMiddle Button = C.SDL_BUTTON_MIDDLE
+	ButtonRight  Button = C.SDL_BUTTON_RIGHT
+	ButtonX1     Button = C.SDL_BUTTON_X1
+	ButtonX2     Button = C.SDL_BUTTON_X2
 )
 
 type MouseButtonEvent struct {
 	winID  windowID
-	Button MouseButton
+	Button Button
 	Down   bool
 	X, Y   int
 }
@@ -202,7 +202,7 @@ func newMouseButtonEvent(ev *C.SDL_Event) *MouseButtonEvent {
 	e := (*C.SDL_MouseButtonEvent)(unsafe.Pointer(ev))
 	return &MouseButtonEvent{
 		winID:  windowID(e.windowID),
-		Button: MouseButton(e.button),
+		Button: Button(e.button),
 		Down:   e.state == C.SDL_PRESSED,
 		X:      int(e.x),
 		Y:      int(e.y),
