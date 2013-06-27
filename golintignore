@@ -1,17 +1,12 @@
 event.go:47:6: exported type WindowEventKind should have comment
-event.go:125:1: exported method WindowEvent.WindowID should have comment
 event.go:139:6: exported type KeyState should have comment
 event.go:142:2: exported const KeyPressed should have comment
 event.go:146:6: exported type KeyboardEvent should have comment
-event.go:153:1: exported method KeyboardEvent.WindowID should have comment
 event.go:168:6: exported type MouseMotionEvent should have comment
-event.go:184:1: exported method MouseMotionEvent.WindowID should have comment
 event.go:188:6: exported type MouseButton should have comment
 event.go:191:2: exported const ButtonLeft should have comment
 event.go:198:6: exported type MouseButtonEvent should have comment
-event.go:205:1: exported method MouseButtonEvent.WindowID should have comment
 event.go:220:6: exported type MouseWheelEvent should have comment
-event.go:234:1: exported method MouseWheelEvent.WindowID should have comment
 key.go:17:6: exported type Key should have comment
 key.go:20:2: comment on exported const Key0 should be of the form "Key0 ..."
 key.go:23:2: comment on exported const Key1 should be of the form "Key1 ..."
@@ -233,16 +228,3 @@ key.go:675:2: comment on exported const KeyX should be of the form "KeyX ..."
 key.go:678:2: comment on exported const KeyY should be of the form "KeyY ..."
 key.go:681:2: comment on exported const KeyZ should be of the form "KeyZ ..."
 key.go:914:6: exported type KeyMod should have comment
-renderer.go:19:6: exported type Renderer should have comment
-renderer.go:25:6: exported type RendererFlags should have comment
-renderer.go:82:6: exported type BlendMode should have comment
-renderer.go:208:6: exported type Texture should have comment
-renderer.go:214:6: exported type PixelFormat should have comment
-renderer.go:217:2: exported const RGBA8888 should have comment
-renderer.go:221:6: exported type TextureAccess should have comment
-renderer.go:271:1: exported method Texture.SetBlendMode should have comment
-sdl2.go:17:6: exported type InitFlags should have comment
-win.go:17:6: exported type Window should have comment
-win.go:23:6: exported type WindowFlags should have comment
-win.go:26:2: exported const FullScreen should have comment
-win.go:75:6: exported type WindowID should have comment
