@@ -23,6 +23,8 @@ func init() {
 	runtime.LockOSThread()
 }
 
+const eventChanSize = 100
+
 var (
 	doChan  = make(chan func(), 1)
 	windows = make(map[windowID]*Window, 1)
@@ -72,8 +74,13 @@ func pollEvents() {
 		if ev := pollEvent(); ev == nil {
 			break
 		} else if e, ok := ev.(windowIDer); ok {
-			if win, ok := windows[e.windowID()]; ok {
-				win.events <- e
+			win, ok := windows[e.windowID()]
+			if !ok {
+				return
+			}
+			select {
+			case win.events <- e:
+			default: // too many events queued, junk it.
 			}
 		}
 	}
@@ -96,7 +103,7 @@ type texture struct {
 // NewWindow returns a new window.
 func NewWindow(title string, w, h int) *Window {
 	win := &Window{
-		events: make(chan interface{}, 1),
+		events: make(chan interface{}, eventChanSize),
 		imgs:   make(map[string]texture),
 	}
 	do(func() {
