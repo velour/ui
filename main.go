@@ -37,12 +37,12 @@ func main2() {
 
 				c.SetColor(color.NRGBA{G: 128, A: 255})
 				c.SetFont(font, 12)
-				_, h := c.DrawString("Hello, World!", 50, 50)
+				_, h := c.FillString("Hello, World!", 50, 50)
 
 				c.SetColor(color.NRGBA{B: 255, A: 128})
 				c.SetFont(font, 48)
-				w, _ := c.DrawString("Foo bar", 50, 50+h)
-				c.DrawString(" baz", 50+w, 50+h)
+				w, _ := c.FillString("Foo bar", 50, 50+h)
+				c.FillString(" baz", 50+w, 50+h)
 			})
 		}
 	}

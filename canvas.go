@@ -135,9 +135,9 @@ func (c *Canvas) SetFont(path string, size int) {
 	c.font = getFont(path, size)
 }
 
-// DrawString draws a string of text in the current font and draw color.  The width and height
+// FillString fills a string of text in the current font and draw color.  The width and height
 // of the string is returned.
-func (c Canvas) DrawString(s string, x, y int) (width, height int) {
+func (c Canvas) FillString(s string, x, y int) (width, height int) {
 	img := c.font.draw(s, c.color())
 	tex := texFromImage(c.win.rend, img)
 	defer C.SDL_DestroyTexture(tex)
