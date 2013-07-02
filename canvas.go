@@ -123,7 +123,7 @@ func (c Canvas) DrawPNG(path string, x, y int) {
 func texFromImage(rend *C.SDL_Renderer, img *image.NRGBA) *C.SDL_Texture {
 	b := img.Bounds()
 	w, h := b.Dx(), b.Dy()
-	fmt := C.SDL_PIXELFORMAT_RGBA8888
+	fmt := C.SDL_PIXELFORMAT_ABGR8888
 	acc := C.SDL_TEXTUREACCESS_STATIC
 	tex := C.SDL_CreateTexture(rend, C.Uint32(fmt), C.int(acc), C.int(w), C.int(h))
 	if tex == nil {
