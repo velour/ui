@@ -21,7 +21,8 @@ import (
 // A Canvas can draw to a window.
 // The drawing operations can only be safely used within the main go routine.
 type Canvas struct {
-	win *Window
+	win  *Window
+	font font
 }
 
 // Clear clears the canvas with the drawing color.
@@ -42,6 +43,15 @@ func (c Canvas) SetColor(col color.Color) {
 	if C.SDL_SetRenderDrawColor(c.win.rend, r8, g8, b8, a8) < 0 {
 		panic(sdlError())
 	}
+}
+
+// Color returns the current drawing color.
+func (c Canvas) color() color.Color {
+	var r, g, b, a C.Uint8
+	if C.SDL_GetRenderDrawColor(c.win.rend, &r, &g, &b, &a) < 0 {
+		panic(sdlError())
+	}
+	return color.NRGBA{uint8(r), uint8(g), uint8(b), uint8(a)}
 }
 
 // DrawPoints draws multiple points on the canvas.
@@ -118,6 +128,26 @@ func (c Canvas) DrawPNG(path string, x, y int) {
 	if C.SDL_RenderCopy(c.win.rend, tex.tex, nil, sdlRect(&dst)) < 0 {
 		panic(sdlError())
 	}
+}
+
+// SetFont sets the current font face and size (in points).
+func (c *Canvas) SetFont(path string, size int) {
+	c.font = getFont(path, size)
+}
+
+// DrawString draws a string of text in the current font and draw color.  The width and height
+// of the string is returned.
+func (c Canvas) DrawString(s string, x, y int) (width, height int) {
+	img := c.font.draw(s, c.color())
+	tex := texFromImage(c.win.rend, img)
+	defer C.SDL_DestroyTexture(tex)
+	b := img.Bounds()
+	w, h := b.Dx(), b.Dy()
+	dst := image.Rect(x, y, x+w, y+h)
+	if C.SDL_RenderCopy(c.win.rend, tex, nil, sdlRect(&dst)) < 0 {
+		panic(sdlError())
+	}
+	return w, h
 }
 
 func texFromImage(rend *C.SDL_Renderer, img *image.NRGBA) *C.SDL_Texture {

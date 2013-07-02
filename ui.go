@@ -159,7 +159,7 @@ func (win *Window) Events() <-chan interface{} {
 // window. The Canvas's methods can only safely be called from the main go routine.
 func (win *Window) Draw(f func(win Canvas)) {
 	do(func() {
-		f(Canvas{win})
+		f(Canvas{win: win})
 		C.SDL_RenderPresent(win.rend)
 	})
 }
