@@ -151,6 +151,12 @@ func (c Canvas) FillString(s string, x, y int) (width, height int) {
 	return w, h
 }
 
+// StringSize returns the width and height of the string in pixels when rendered in the current font.
+func (c Canvas) StringSize(s string) (width, height int) {
+	height, _, _ = c.font.extents()
+	return c.font.width(s), height
+}
+
 func texFromImage(rend *C.SDL_Renderer, img *image.NRGBA) *C.SDL_Texture {
 	b := img.Bounds()
 	w, h := b.Dx(), b.Dy()

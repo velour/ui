@@ -49,8 +49,12 @@ func main2() {
 
 				c.SetColor(color.RGBA{B: 255, G: 128, A: 255})
 				c.SetFont(font, 12)
-				_, h = c.FillString("frame: "+frameTime.String(), 0, 0)
-				c.FillString("draw: "+drawTime.String(), 0, h)
+				frameStr := frameTime.String() + " frame time"
+				w, h = c.StringSize(frameStr)
+				c.FillString(frameStr, width-w, height-h)
+				drawStr := drawTime.String() + " draw time"
+				w, _ = c.StringSize(drawStr)
+				c.FillString(drawStr, width-w, height-2*h)
 			})
 			drawTime = time.Since(startDraw)
 			frameTime = time.Since(lastFrame)
