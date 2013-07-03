@@ -135,8 +135,9 @@ func (c *Canvas) SetFont(path string, size int) {
 	c.font = getFont(path, size)
 }
 
-// FillString fills a string of text in the current font and draw color.  The width and height
-// of the string is returned.
+// FillString fills a string of text in the current font and draw color.  X and y specify the
+// upper-left corner of the bounding box of the text, and the width and height of the
+// bounding box is returned.
 func (c Canvas) FillString(s string, x, y int) (width, height int) {
 	img := c.font.draw(s, c.color())
 	tex := texFromImage(c.win.rend, img)
