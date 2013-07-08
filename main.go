@@ -24,7 +24,7 @@ func main2() {
 	win := ui.NewWindow("test", width, height)
 	tick := time.NewTicker(20 * time.Millisecond)
 	lastFrame := time.Now()
-	var frameTime, drawTime time.Duration
+	var frameDur, drawDur time.Duration
 	for {
 		select {
 		case ev := <-win.Events():
@@ -49,15 +49,15 @@ func main2() {
 
 				c.SetColor(color.RGBA{B: 255, G: 128, A: 255})
 				c.SetFont(font, 12)
-				frameStr := frameTime.String() + " frame time"
+				frameStr := frameDur.String() + " frame time"
 				w, h = c.StringSize(frameStr)
 				c.FillString(frameStr, width-w, height-h)
-				drawStr := drawTime.String() + " draw time"
+				drawStr := drawDur.String() + " draw time"
 				w, _ = c.StringSize(drawStr)
 				c.FillString(drawStr, width-w, height-2*h)
 			})
-			drawTime = time.Since(startDraw)
-			frameTime = time.Since(lastFrame)
+			drawDur = time.Since(startDraw)
+			frameDur = time.Since(lastFrame)
 			lastFrame = time.Now()
 		}
 	}
