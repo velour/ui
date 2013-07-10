@@ -1,3 +1,5 @@
+// © 2013 the Ui Authors under the MIT license. See AUTHORS for the list of authors.
+
 // +build ignore
 
 package main
@@ -6,7 +8,7 @@ import (
 	"image/color"
 	"time"
 
-	"github.com/eaburns/ui"
+	"github.com/velour/ui"
 )
 
 const (
