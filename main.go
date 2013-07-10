@@ -1,3 +1,5 @@
+// © 2013 the Ui Authors under the MIT license. See AUTHORS for the list of authors.
+
 // +build ignore
 
 package main
