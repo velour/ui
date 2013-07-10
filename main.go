@@ -6,7 +6,7 @@ import (
 	"image/color"
 	"time"
 
-	"github.com/eaburns/ui"
+	"github.com/velour/ui"
 )
 
 const (
