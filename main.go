@@ -12,10 +12,12 @@ import (
 )
 
 const (
-	width   = 640
-	height  = 480
-	imgPath = "gopher.png"
-	font    = "prstartk.ttf"
+	width    = 640
+	height   = 480
+	imgPath  = "resrc/gopher.png"
+	fontPath = "resrc/prstartk.ttf"
+	pewPath  = "resrc/pew.wav"
+	owPath   = "resrc/ow1.wav"
 )
 
 func main() {
@@ -23,6 +25,10 @@ func main() {
 }
 
 func main2() {
+	ow := ui.PlayWAV(owPath, true)
+	stopOw := time.NewTicker(5 * time.Second)
+	pewTick := time.NewTicker(500 * time.Millisecond)
+
 	win := ui.NewWindow("test", width, height)
 	tick := time.NewTicker(20 * time.Millisecond)
 	lastFrame := time.Now()
@@ -33,6 +39,13 @@ func main2() {
 			if w, ok := ev.(*ui.WindowEvent); ok && w.Event == ui.WindowClose {
 				return
 			}
+
+		case <-stopOw.C:
+			ow.Stop()
+
+		case <-pewTick.C:
+			ui.PlayWAV(pewPath, false)
+
 		case <-tick.C:
 			startDraw := time.Now()
 			win.Draw(func(c ui.Canvas) {
@@ -41,16 +54,16 @@ func main2() {
 				c.DrawPNG(imgPath, 0, 0)
 
 				c.SetColor(color.NRGBA{G: 128, A: 255})
-				c.SetFont(font, 12)
+				c.SetFont(fontPath, 12)
 				_, h := c.FillString("Hello, World!", 50, 50)
 
 				c.SetColor(color.NRGBA{B: 255, A: 128})
-				c.SetFont(font, 48)
+				c.SetFont(fontPath, 48)
 				w, _ := c.FillString("Foo bar", 50, 50+h)
 				c.FillString(" baz", 50+w, 50+h)
 
 				c.SetColor(color.RGBA{B: 255, G: 128, A: 255})
-				c.SetFont(font, 12)
+				c.SetFont(fontPath, 12)
 				frameStr := frameDur.String() + " frame time"
 				w, h = c.StringSize(frameStr)
 				c.FillString(frameStr, width-w, height-h)
