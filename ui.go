@@ -40,6 +40,8 @@ func Start(f func(), rate time.Duration) {
 		panic(sdlError())
 	}
 
+	initAudio()
+
 	go func() {
 		f()
 		os.Exit(0)
