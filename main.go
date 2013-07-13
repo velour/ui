@@ -14,10 +14,10 @@ import (
 const (
 	width    = 640
 	height   = 480
-	imgPath  = "gopher.png"
-	fontPath = "prstartk.ttf"
-	pewPath  = "pew.wav"
-	owPath   = "ow1.wav"
+	imgPath  = "resrc/gopher.png"
+	fontPath = "resrc/prstartk.ttf"
+	pewPath  = "resrc/pew.wav"
+	owPath   = "resrc/ow1.wav"
 )
 
 func main() {
