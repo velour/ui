@@ -44,7 +44,7 @@ func initAudio() {
 	C.SDL_PauseAudio(0)
 }
 
-// PlayWAV returns a Sound from a WAV file.
+// PlayWAV plays the sound from a wav file and returns a Sound for it.
 func PlayWAV(path string, repeat bool) *Sound {
 	data, ok := sounds[path]
 	if !ok {
