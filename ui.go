@@ -4,12 +4,15 @@
 package ui
 
 /*
-#include <SDL.h>
+#include "ui.h"
 
-#cgo darwin CFLAGS: -I/Library/Frameworks/SDL2.framework/Headers
+#cgo darwin CFLAGS: -I darwin
 #cgo darwin LDFLAGS: -framework SDL2
 
+#cgo linux CFLAGS: -I linux
 #cgo linux pkg-config: sdl2
+
+#cgo windows CFLAGS: -I windows
 */
 import "C"
 
