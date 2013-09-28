@@ -3,12 +3,7 @@
 package ui
 
 /*
-#include <SDL.h>
-
-#cgo darwin CFLAGS: -I/Library/Frameworks/SDL2.framework/Headers
-#cgo darwin LDFLAGS: -framework SDL2
-
-#cgo linux pkg-config: sdl2
+#include "ui.h"
 
 extern void audioCallback(void *, Uint8 *, int);
 
